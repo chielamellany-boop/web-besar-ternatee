@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Font Awesome Cdjns -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    
+    <!-- Animate Style -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <!-- Aos -->
+      <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+    <!-- Jonson Hamburgers -->
+    <link rel="stylesheet" href="hamburgers.css">
+
+    <link rel="stylesheet" href="style.css">
+    <!-- css -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Merriweather:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <title>Travel Ternate</title>
+    
+    <style>
+        /* Gaya untuk Modal (pop-up) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: slideDown 0.4s ease;
+            overflow: hidden;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .close-modal {
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            line-height: 1;
+        }
+        
+        .close-modal:hover {
+            color: #ff6b6b;
+            transform: scale(1.1);
+        }
+        
+        .modal-body {
+            padding: 25px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .modal-img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .modal-body p {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            text-align: justify;
+        }
+        
+        /* Membuat box klikable */
+        .box {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        /* Perbaikan footer */
+        .foot {
+            margin: 0;
+            padding: 0;
+        }
+        
+        footer {
+            margin-top: 50px;
+        }
+        
+        /* Menjaga tampilan box-area tetap rapi */
+        .box-area {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            cursor: grab;
+            overflow-x: auto;
+            padding-bottom: 15px;
+        }
+        
+        .box-area:active {
+            cursor: grabbing;
+        }
+        
+        .box {
+            flex: 0 0 320px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .box img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .box h3 {
+            padding: 15px 15px 5px;
+            font-family: 'Poppins', sans-serif;
+            color: #2c3e50;
+        }
+        
+        .box p {
+            padding: 0 15px 20px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+  
+  <!-- Header -->
+  <section class="kota-kabupaten">
+  <div class="container">
+    <div class="navbar">
+      <div class="logo">
+      <i class=""></i></div>
+      <ul class="menu">
+        <li><a href="index.html"> <i class="fa-solid fa-home"></i>Home</a></li>
+         <li><a href="about.html "> <i class="fa-solid fa-info-circle"></i>About</a></li>
+        <li><a href="contact.html"> <i class="fa-solid fa-comments"></i>Contact</a></li>
+        <li><a href="galery.html"> <i class="fa-solid fa-images"></i>Gallery</a></li>
+                <li><a href="pemesanan.html"> <i class="fa-solid fa-calendar-check"></i>Pemesanan</a></li>
+        <li><a href="destinasi-populer.html"> <i class="fa-solid fa-map-marked-alt"></i>Destinasi Populer</a></li>
+      </ul>
+      <button class="about-button"></button>
+      <button class="hamburger hamburger--spin" type="button">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+    </div>
+    
+    <div class="hero">
+      <h1 class="animate__animated animate__fadeInUp animate__delay-2s">
+        <span id="t1">Kota dan kabupaten</span> <br /> 
+      <span id="t2">Ternate</span>
+      </h1>
+      <div class="hero-jargon">
+        <div class="animate__animated animate__fadeInUp animate__delay-1s">
+          <p><span>Indonesia</span> is a country that has many destinations that can be explored, one of which is the destination in Ternate.</p>
+        </div>
+        <div class="animate__animated animate__fadeInUp animate__delay-1s">
+          <p>This travel focuses only on <span>Indonesia</span> with many destinations that can be explored.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  
+  <!-- Section Kota & Kabupaten -->
+<section class="materi">
+  <div class="container">
+    <h2>Wisata Kota & Kabupaten</h2>
+
+    <div class="box-area">
+
+      <!-- Kabupaten - DITAMBAHKAN data atribut untuk modal -->
+      <div class="box" data-name="Kabupaten Pulau Morotai" 
+           data-img="wisata kota gemelama.jpeg" 
+           data-desc="<strong>Kabupaten Pulau Morotai</strong> merupakan salah satu daerah di Maluku Utara yang terkenal dengan keindahan pantainya. Morotai juga memiliki sejarah penting pada masa Perang Dunia II. Saat ini, Morotai menjadi destinasi wisata unggulan dengan air laut yang jernih dan pasir putih. Selain pantai, Morotai juga menyimpan banyak peninggalan sejarah seperti pangkalan militer Jepang dan Sekutu, serta pesawat-pesawat yang tenggelam di perairannya. Keindahan bawah laut Morotai sangat cocok untuk diving dan snorkeling. Pulau ini juga memiliki budaya yang khas dengan penduduk yang ramah. Jangan lewatkan juga Danau Paca yang airnya sangat jernih dan dikelilingi hutan tropis yang asri.">
+        <img src="wisata kota gemelama.jpeg" alt="wisata kota gemelama">
+        <h3>Kabupaten Pulau Morotai</h3>
+        <p>
+          Kabupaten Pulau Morotai merupakan salah satu daerah di Maluku Utara yang terkenal
+          dengan keindahan pantainya. Morotai juga memiliki sejarah penting pada masa Perang Dunia II.
+          Saat ini, Morotai menjadi destinasi wisata unggulan dengan air laut yang jernih dan pasir putih.
+        </p>
+      </div>
+
+      <!-- Kota - DITAMBAHKAN data atribut untuk modal -->
+      <div class="box" data-name="Kota Ternate" 
+           data-img="kabupaten maluku utara.jpeg" 
+           data-desc="<strong>Kota Ternate</strong> adalah pusat sejarah dan budaya di Maluku Utara. Kota ini terkenal sebagai penghasil rempah-rempah seperti cengkeh sejak zaman dahulu. Selain itu, Ternate memiliki berbagai destinasi wisata seperti Gunung Gamalama yang megah, Pantai Sulamadaha dengan pasir putihnya, serta Benteng Oranje dan Benteng Tolukko yang bersejarah. Kota Ternate juga dikelilingi oleh pulau-pulau kecil seperti Pulau Maitara dan Pulau Tidore yang eksotis. Wisata kuliner di Ternate sangat beragam, mulai dari sambal colo-colo hingga ikan bakar. Masyarakat Ternate terkenal ramah dan budaya rempah masih sangat terasa hingga kini. Kota ini juga menjadi gerbang utama untuk menjelajahi Maluku Utara.">
+        <img src="kabupaten maluku utara.jpeg" alt="Kabupaten maluku utara">
+        <h3>Kota Ternate</h3>
+        <p>
+          Kota Ternate adalah pusat sejarah dan budaya di Maluku Utara. Kota ini terkenal
+          sebagai penghasil rempah-rempah seperti cengkeh sejak zaman dahulu. Selain itu,
+          Ternate memiliki berbagai destinasi wisata seperti gunung, pantai, dan benteng bersejarah.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL POPUP untuk menampilkan foto dan materi lengkap -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Detail Destinasi</h2>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <img id="modalImage" class="modal-img" src="" alt="Gambar Destinasi">
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<body class="foot">
+<footer class="footer">
+  	 <div class="container">
+  	 	<div class="row">
+  	 		<div class="footer-col">
+  	 			<h4>About Me</h4>
+                <p>Saya Deris Mellani N.R, siswa kelas X PPLG 2 SMKN 1 Cisarua. Harapannya dengan website ini dibuat masyarakat bisa lebih mengenal tentang kota Ternate, dimulai dari destinasi wisata, budaya, sejarah, dan masih banyak lagi.</p>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>Credit</h4>
+  	 			<ul>
+  	 				<li><a href="#">Aos library</a></li>
+  	 				<li><a href="#">Font awesome</a></li>
+  	 				<li><a href="#">Google font</a></li>
+  	 				<li><a href="#">Hamburgers css</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>Quick links</h4>
+  	 			<ul>
+  	 				<li><a href="macam%C2%B2-destinasi.html">Destinasi</a></li>
+  	 				<li><a href="culinary.html">Kuliner</a></li>
+  	 				<li><a href="contact.html">Contact</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>follow us</h4>
+  	 			<div class="social-links">
+  	 				<a href="https://www.tiktok.com/@d1019084?_t=ZS-8vl8RBAnOkC&_r=1"><i class="fab fa-tiktok"></i></a>
+  	 				<a href="https://youtube.com/@dikahaes?si=42hOR4x9H5hSNZhS"><i class="fab fa-youtube"></i></a>
+  	 				<a href="https://www.instagram.com/keithayst_?igsh=ZW5jZmRncDBzeDBi"><i class="fab fa-instagram"></i></a>
+  	 			</div>
+  	 		</div>
+  	 	</div>
+  	 </div>
+  </footer>
+        
+      <!-- Pre Loader -->
+ <div class="loader">
+      <img src="loader.svg">
+    </div>
+    <!-- Pre Loader -->
+    
+  <!-- JS -->
+  <script src="script.js"></script> 
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    
+  <!-- Initialize Swiper -->
+  <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+          type: "fraction",
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          1280: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+        },
+      });
+  </script>
+  
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  
+  <!-- SCRIPT UNTUK MEMBUAT KLICK BOX MENAMPILKAN MODAL FOTO + MATERI -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ambil elemen modal
+        const modal = document.getElementById('detailModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImage = document.getElementById('modalImage');
+        const modalDescription = document.getElementById('modalDescription');
+        const closeBtn = document.querySelector('.close-modal');
+        
+        // Ambil semua elemen dengan class 'box' (kabupaten & kota)
+        const boxes = document.querySelectorAll('.box');
+        
+        // Fungsi untuk menampilkan modal
+        function showModal(name, imgSrc, description) {
+            modalTitle.textContent = name;
+            modalImage.src = imgSrc;
+            modalDescription.innerHTML = description; // menggunakan innerHTML karena ada tag <strong>
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Mencegah scroll di belakang modal
+        }
+        
+        // Tutup modal
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Event klik pada setiap box
+        boxes.forEach(box => {
+            box.addEventListener('click', function(e) {
+                // Mengambil data dari atribut custom yang sudah ditambahkan
+                const name = this.getAttribute('data-name');
+                let imgSrc = this.getAttribute('data-img');
+                const desc = this.getAttribute('data-desc');
+                
+                // Validasi jika gambar tidak ada, pakai gambar default
+                if (!imgSrc || imgSrc === '') {
+                    imgSrc = 'https://via.placeholder.com/800x400?text=Gambar+Destinasi';
+                }
+                
+                // Tampilkan modal dengan data yang sesuai
+                if (name && desc) {
+                    showModal(name, imgSrc, desc);
+                } else {
+                    // fallback jika data atribut tidak ada (mengambil dari teks dalam box)
+                    const title = this.querySelector('h3') ? this.querySelector('h3').innerText : 'Destinasi Wisata';
+                    const imgElement = this.querySelector('img');
+                    const imageUrl = imgElement ? imgElement.src : 'https://via.placeholder.com/800x400?text=Wisata+Ternate';
+                    const shortDesc = this.querySelector('p') ? this.querySelector('p').innerText : 'Deskripsi lengkap tersedia.';
+                    // Membuat deskripsi lengkap untuk fallback
+                    const fullDesc = `<strong>${title}</strong><br><br>${shortDesc}<br><br>${title} merupakan destinasi unggulan di Maluku Utara yang kaya akan keindahan alam dan sejarah. Kunjungi untuk pengalaman liburan tak terlupakan!`;
+                    showModal(title, imageUrl, fullDesc);
+                }
+            });
+        });
+        
+        // Event untuk tombol close (X)
+        closeBtn.addEventListener('click', closeModal);
+        
+        // Jika klik di luar modal-content, tutup modal
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Event keyboard: tekan ESC untuk menutup
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                closeModal();
+            }
+        });
+    });
+  </script>
+  
+  <!-- Script drag horizontal untuk .box-area (tidak mengganggu klik modal) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const boxArea = document.querySelector('.box-area');
+      if (!boxArea) return;
+
+      let isDragging = false;
+      let startX;
+      let scrollLeft;
+
+      boxArea.addEventListener('mousedown', (e) => {
+        // Jangan aktifkan drag jika yang diklik adalah .box (biar tetap bisa klik)
+        if (e.target.closest('.box')) return;
+        isDragging = true;
+        startX = e.pageX - boxArea.offsetLeft;
+        scrollLeft = boxArea.scrollLeft;
+        boxArea.style.cursor = 'grabbing';
+      });
+
+      boxArea.addEventListener('mouseleave', () => {
+        isDragging = false;
+        boxArea.style.cursor = 'grab';
+      });
+
+      boxArea.addEventListener('mouseup', () => {
+        isDragging = false;
+        boxArea.style.cursor = 'grab';
+      });
+
+      boxArea.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - boxArea.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        boxArea.scrollLeft = scrollLeft - walk;
+      });
+      
+      // Set default cursor grab
+      boxArea.style.cursor = 'grab';
+    });
+  </script>
+  
+  <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+</body>
+</html>
